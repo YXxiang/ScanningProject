@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/colorPrimaryDark"
+    android:id="@+id/base_toolbar">
+
+
+
+    <ImageView
+        android:id="@+id/user_img"
+        android:layout_marginLeft="3dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/usered"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/user_img"
+        android:layout_marginLeft="5dp"
+        android:text=""
+        android:textSize="12sp"
+        android:gravity="center_vertical|bottom"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/username"
+        android:text=""
+        android:textSize="12sp"
+        android:gravity="center_vertical|top"
+        android:textColor="@color/white"/>
+
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <View
+        style="@style/grayLine"
+        android:layout_alignParentBottom="true"
+        />
+
+
+
+
+
+
+
+</RelativeLayout>
