@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.android.yyx.scanningproject.activity.OperationActivity">
+
+<!--<FrameLayout-->
+    <!--android:id="@+id/LoginFrameLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <fragment
+        android:id="@+id/loginfragment"
+        android:name="com.android.yyx.scanningproject.fragment.LoginFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </fragment>
+
+    <!--<fragment-->
+        <!--android:id="@+id/mainfragment"-->
+        <!--android:name="com.android.yyx.scanningproject.fragment.MainFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <!--</fragment>-->
+
+<!--</FrameLayout>-->
+
+</RelativeLayout>

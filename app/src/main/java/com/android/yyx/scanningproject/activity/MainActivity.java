@@ -1,12 +1,12 @@
 package com.android.yyx.scanningproject.activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +19,7 @@ import com.android.yyx.scanningproject.R;
 import com.android.yyx.scanningproject.base.BaseActivity;
 import com.android.yyx.scanningproject.base.MyApplication;
 import com.android.yyx.scanningproject.network.ServiceManager;
+import com.android.yyx.scanningproject.tools.NetWorkStatusReceiver;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<String> reslutCodes = new ArrayList<String>();
     private TextView saveBtn;
     private TextView exitBtn;
-
+    private NetWorkStatusReceiver netWorkStatusReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setToolBarTitle("车辆信息登记");
         setUsername("");
         setNumber("");
-        Log.d("输出", String.valueOf(isNetWorkConnected));
         init();
         gotoOne_CodeCamera();
+        initRegisterReceiver();
+    }
+
+    private void initRegisterReceiver(){
+        netWorkStatusReceiver = new NetWorkStatusReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(netWorkStatusReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(netWorkStatusReceiver);
     }
 
     private void init(){
