@@ -1,4 +1,5 @@
 package com.android.yyx.scanningproject.activity;
+import android.Manifest;
 import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,8 +14,10 @@ import com.android.yyx.scanningproject.R;
 import com.android.yyx.scanningproject.base.MyApplication;
 import com.android.yyx.scanningproject.fragment.LoginFragment;
 import com.android.yyx.scanningproject.fragment.MainFragment;
+import com.android.yyx.scanningproject.network.NetWorkUtils;
 import com.android.yyx.scanningproject.network.ServiceManager;
 import com.android.yyx.scanningproject.tools.CallBack;
+import com.android.yyx.scanningproject.tools.DeviceUuidFactory;
 import com.android.yyx.scanningproject.tools.ScanTools;
 
 import java.io.IOException;
@@ -27,7 +30,11 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+
+@RuntimePermissions
 public class OperationActivity extends AppCompatActivity {
 
     private boolean isLogin = false;
@@ -36,8 +43,7 @@ public class OperationActivity extends AppCompatActivity {
     private MainFragment mainFragment;
     private List<String> codeList = new ArrayList<>();
     private List<String> dataList = new ArrayList<>();
-    private boolean isSave = false;
-
+    private String deviceID = null;
 
 
 
@@ -45,6 +51,13 @@ public class OperationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operation);
+
+        if (DeviceUuidFactory.getSDKVersionNumber() >= 23){
+            OperationActivityPermissionsDispatcher.callWithCheck(this);
+        }else {
+            deviceID =  DeviceUuidFactory.getIMIEStatus(this);
+        }
+
 
     }
 
@@ -59,6 +72,7 @@ public class OperationActivity extends AppCompatActivity {
         mainFragment.callBack = new CallBack() {
             @Override
             public void exitCallBack() {
+                isLogin = false;
                 MyApplication.appExit();
             }
 
@@ -113,16 +127,17 @@ public class OperationActivity extends AppCompatActivity {
 
             if (intent.getAction().equals(m_BroadcastName)) {
                 String str = intent.getStringExtra("BARCODE");
+                if (!NetWorkUtils.isNetworkConnected(OperationActivity.this)){
+                    Toast.makeText(context, "網絡連接異常,請檢查設備網絡!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (str.isEmpty()) {
-                    Toast.makeText(context, "扫描失败哟，请重新扫描~~", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "掃描失敗，請重新掃描~~", Toast.LENGTH_SHORT).show();
                 } else {
                     if (!isLogin){
                         getUserInfoSucess(str);
                     }else {
                         Log.d("输出",str);
-                        if (!codeList.contains(str)){
-                            codeList.add(str);
-                        }
                         getNetworkData(str);
 
                     }
@@ -139,13 +154,15 @@ public class OperationActivity extends AppCompatActivity {
      */
     private void getUserInfoSucess(String barCodes){
 
-        barCodes = "4411490";
+        if (deviceID == null){
+            deviceID = DeviceUuidFactory.getIMIEStatus(this);
+        }
 
         String sessionid = ScanTools.getNowTime();
-        Log.d("输出","条码 = " + barCodes + "，时间 = " + sessionid);
+        Log.d("输出","设备ID = " + deviceID + ", 条码 = " + barCodes + ", 时间 = " + sessionid);
         ServiceManager.getInstances()
                 .configerApi()
-                .getUserCheckIfo(barCodes,sessionid)
+                .getUserCheckIfo(deviceID,barCodes,sessionid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -161,18 +178,11 @@ public class OperationActivity extends AppCompatActivity {
                             Log.d("输出","responseBody = "+s);
                             if (ScanTools.returnTureOrFalse(s)){
                                 isLogin = true;
-                                Toast.makeText(OperationActivity.this, "身份认证成功,欢迎使用!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(OperationActivity.this, "身份認證成功,歡迎使用!", Toast.LENGTH_SHORT).show();
                                 replaceFragment(s);
 
                             }else {
-//                                Toast.makeText(OperationActivity.this, s, Toast.LENGTH_LONG).show();
-//                                new Handler().postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        finish();
-//                                        MyApplication.appExit();
-//                                    }
-//                                },3000);
+                                Toast.makeText(OperationActivity.this, s, Toast.LENGTH_SHORT).show();
                             }
                         }catch (IOException e){
                             e.printStackTrace();
@@ -194,7 +204,8 @@ public class OperationActivity extends AppCompatActivity {
     /**
      * 身份识别请求，扫描司机和乘客的api
      */
-    private void getNetworkData(String barCodes){
+    private void getNetworkData(final String barCodes){
+
         String sessionid = ScanTools.getNowTime();
         Log.d("输出","条码 = " + barCodes + "，时间 = " + sessionid);
         ServiceManager.getInstances()
@@ -213,6 +224,9 @@ public class OperationActivity extends AppCompatActivity {
                             String reslut = responseBody.string();
                             String s = ScanTools.getContentFromTag(reslut);
                             Log.d("输出","responseBody = "+s);
+                            if (!codeList.contains(barCodes)){
+                                codeList.add(barCodes);
+                            }
                             if (ScanTools.returnTureOrFalse(s)){
                                 if (dataList.size() > 4) return;
                                 if (dataList.contains(s)) return;
@@ -239,10 +253,6 @@ public class OperationActivity extends AppCompatActivity {
     }
 
 
-    private void setData(String s){
-
-    }
-
 
     /**
      * 保存的回调接口
@@ -252,14 +262,17 @@ public class OperationActivity extends AppCompatActivity {
         String p_IO = (isInOrOut ? "I" : "O");
         String p_MRK = mainFragment.textView5.getText().toString();
         String p_sessionid = ScanTools.getNowTime();
-
+        String userNum = mainFragment.userNumber.getText().toString();
+        String[] list = userNum.split(":");
+        String p_empno = list[1];
         Log.d("输出", "p_Barcodes = " + p_Barcodes + "," +
                 "p_IO = " + p_IO + "," +
                 "p_MRK = " + p_MRK + "," +
-                "p_sessionid = " + p_sessionid);
+                "p_sessionid = " + p_sessionid + "," +
+                "p_empno = " + p_empno);
         ServiceManager.getInstances()
                 .configerApi()
-                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK, p_sessionid)
+                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK, p_sessionid,p_empno)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -282,7 +295,7 @@ public class OperationActivity extends AppCompatActivity {
                                 dataList.clear();
 
                             }else {
-                                toastText = "保存失败!";
+                                toastText = "保存失敗!";
                             }
                             Toast.makeText(OperationActivity.this, toastText, Toast.LENGTH_SHORT).show();
 
@@ -303,8 +316,18 @@ public class OperationActivity extends AppCompatActivity {
                     }
                 });
 
-
     }
 
 
+    @NeedsPermission(Manifest.permission.READ_PHONE_STATE)
+    void call() {
+        Toast.makeText(this, "获取READ_PHONE_STATE权限", Toast.LENGTH_SHORT).show();
+        deviceID =  DeviceUuidFactory.getIMIEStatus(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        OperationActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
 }

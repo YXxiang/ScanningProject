@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/broundblack">
 
     <include layout="@layout/toolbar"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:id="@+id/main_heardView"
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:background="#e0e0e0"
+        android:background="@drawable/nav_black"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +23,8 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="18dp"
             android:textColor="#333333"
-            android:text="司机"/>
+            android:textSize="18sp"
+            android:text="司機"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -37,7 +38,8 @@
                 android:id="@+id/btn_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="进"
+                android:text="進"
+                android:textSize="@dimen/textSize"
                 android:buttonTint="@color/custom_red"
                 android:checked="true"/>
 
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/custom_red"
+                android:textSize="@dimen/textSize"
                 android:text="出"/>
         </RadioGroup>
 
@@ -58,10 +61,11 @@
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
             android:id="@+id/scan_btn"
-            android:textColor="@color/webviewProgress"
+            android:textColor="@color/colorPrimary"
             android:gravity="center_vertical|right"
             android:layout_marginRight="15dp"
-            android:text="重扫"/>
+            android:textSize="@dimen/textSize"
+            android:text="重掃"/>
     </LinearLayout>
 
 
@@ -82,16 +86,17 @@
                 android:layout_weight="4"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:text="车 牌 号:"
+                android:text="車 牌 號:"
+                android:textSize="@dimen/textSize"
                 android:gravity="center"
                 />
 
             <TextView
                 android:id="@+id/carNum"
                 android:layout_weight="1"
-                android:textSize="12sp"
-                android:textColor="#7A7A7A"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/textSize"
+                android:textColor="#7A7A7A"
                 android:background="@drawable/bg_gray_border"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
@@ -110,7 +115,8 @@
                 android:layout_weight="4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="司机信息:"
+                android:text="司機信息:"
+                android:textSize="@dimen/textSize"
                 android:gravity="center"
 
                 />
@@ -118,7 +124,8 @@
             <TextView
                 android:id="@+id/drive"
                 android:layout_weight="1"
-                android:textSize="10.5sp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/textSize"
                 android:textColor="#7A7A7A"
                 android:background="@drawable/bg_gray_border"
                 android:layout_width="match_parent"
@@ -145,7 +152,7 @@
                 android:id="@+id/main_heardView1"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                android:background="#e0e0e0"
+                android:background="@drawable/nav_black"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="match_parent"
@@ -154,6 +161,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginLeft="18dp"
                     android:textColor="#333333"
+                    android:textSize="18sp"
                     android:text="乘客"/>
 
                 <View
@@ -188,13 +196,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="信息1:"
+                    android:textSize="@dimen/textSize"
                     android:gravity="center"
                     />
 
                 <TextView
                     android:id="@+id/textView1"
                     android:layout_weight="1"
-                    android:textSize="10.5sp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
                     android:textColor="#7A7A7A"
                     android:background="@drawable/bg_gray_border"
                     android:layout_width="match_parent"
@@ -217,13 +227,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="信息2:"
+                    android:textSize="@dimen/textSize"
                     android:gravity="center"
                     />
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_weight="1"
-                    android:textSize="10.5sp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
                     android:textColor="#7A7A7A"
                     android:background="@drawable/bg_gray_border"
                     android:layout_width="match_parent"
@@ -245,13 +257,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="信息3:"
+                    android:textSize="@dimen/textSize"
                     android:gravity="center"
                     />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_weight="1"
-                    android:textSize="10.5sp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
                     android:textColor="#7A7A7A"
                     android:background="@drawable/bg_gray_border"
                     android:layout_width="match_parent"
@@ -272,17 +286,18 @@
 
                 <TextView
                     android:layout_weight="4"
-                    android:textSize="10.5sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="信息4:"
+                    android:textSize="@dimen/textSize"
                     android:gravity="center"
                     />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_weight="1"
-                    android:textSize="10.5sp"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
                     android:textColor="#7A7A7A"
                     android:background="@drawable/bg_gray_border"
                     android:layout_width="match_parent"
@@ -304,20 +319,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="备 注:"
+                    android:textSize="@dimen/textSize"
                     android:gravity="center"
                     />
 
                 <EditText
                     android:id="@+id/textView5"
                     android:layout_weight="1"
-                    android:gravity="top"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_gray_border"
                     android:textColor="#7A7A7A"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:textSize="12sp"
                     android:textCursorDrawable="@null" />
 
             </LinearLayout>

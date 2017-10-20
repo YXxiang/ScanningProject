@@ -29,9 +29,9 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     public CallBack callBack;
-    private TextView userName;
-    private TextView userNumber;
-    private TextView title;
+    public TextView userName;
+    public TextView userNumber;
+    public TextView title;
 
     public TextView carNum;
     public TextView drive;
@@ -81,7 +81,7 @@ public class MainFragment extends Fragment {
             String[] list = str.split(",");
             userName.setText(list[1]);
             userNumber.setText(list[0]);
-            title.setText("车辆出入登记");
+            title.setText("車輛出入登記");
         }
     }
 
@@ -159,33 +159,33 @@ public class MainFragment extends Fragment {
 
 
     public void initTextView(List<String> list){
-//        Log.d("输出",s);
-//        if (s == null) return;;
-//        initNullText();
-//        String[] list = s.split(";");
         for (int i = 0; i < list.size(); i++) {
             switch (i) {
                 case 0:
                     String[] ss = list.get(0).split(";");
                     String[] sss = ss[0].split(":");
                     if (sss.length > 1){
-                        carNum.setText(ss[1]);
+                        carNum.setText(sss[1]);
                     }else {
-                        carNum.setText("无车辆信息记录!");
+                        carNum.setText("無車輛信息記錄!");
                     }
                     drive.setText(ss[1]);
                     break;
                 case 1:
-                    textView1.setText(list.get(1));
+                    String[] ss1 = list.get(1).split(";");
+                    textView1.setText(ss1[1]);
                     break;
                 case 2:
-                    textView2.setText(list.get(2));
+                    String[] ss2 = list.get(2).split(";");
+                    textView2.setText(ss2[1]);
                     break;
                 case 3:
-                    textView3.setText(list.get(3));
+                    String[] ss3 = list.get(3).split(";");
+                    textView3.setText(ss3[1]);
                     break;
                 case 4:
-                    textView4.setText(list.get(4));
+                    String[] ss4 = list.get(4).split(";");
+                    textView4.setText(ss4[1]);
                     break;
                 case 5:
 //                    textView4.setText(list.get(5));
@@ -197,6 +197,7 @@ public class MainFragment extends Fragment {
         }
 
     }
+
 
 
     public void initNullText(){

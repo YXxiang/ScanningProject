@@ -1,6 +1,17 @@
 package com.android.yyx.scanningproject.tools;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.android.yyx.scanningproject.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,6 +93,5 @@ public class ScanTools {
 
         return stringBuilder.toString();
     }
-
 
 }

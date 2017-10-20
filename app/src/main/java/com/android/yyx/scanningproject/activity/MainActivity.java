@@ -349,7 +349,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d("输出","条码 = " + barCodes + "，时间 = " + sessionid);
         ServiceManager.getInstances()
                 .configerApi()
-                .getUserCheckIfo(barCodes,sessionid)
+                .getUserCheckIfo("",barCodes,sessionid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -451,7 +451,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 "p_sessionid = " + p_sessionid);
         ServiceManager.getInstances()
                 .configerApi()
-                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK, p_sessionid)
+                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK, p_sessionid,"")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {

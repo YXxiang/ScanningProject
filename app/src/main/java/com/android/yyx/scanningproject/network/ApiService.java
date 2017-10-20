@@ -16,7 +16,8 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("Car_UserChk")
-    Observable<ResponseBody> getUserCheckIfo(@Field("p_Barcode") String barcodes,
+    Observable<ResponseBody> getUserCheckIfo(@Field("p_appid") String appid,
+                                             @Field("p_Barcode") String barcodes,
                                              @Field("p_sessionid") String sessionId);
 
     @FormUrlEncoded
@@ -30,6 +31,7 @@ public interface ApiService {
     Observable<ResponseBody> saveEntryDataInfoCodes(@Field("p_Barcode") String barcodes,
                                                     @Field("p_IO") String ioStr,
                                                     @Field("p_RMK") String text,
-                                                    @Field("p_sessionid") String sessionId);
+                                                    @Field("p_sessionid") String sessionId,
+                                                    @Field("p_empno") String empno);
 
 }
