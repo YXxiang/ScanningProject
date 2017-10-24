@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:name=".base.MyApplication"
@@ -33,29 +34,44 @@
 
         </receiver>
 
-        <!--<activity-->
-            <!--android:name=".actirvity.MainActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--tools:replace="screenOrientation">-->
-        <!--</activity>-->
-
-
         <activity android:name=".activity.OperationActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <data android:mimeType="text/plain"></data>
+            </intent-filter>
+
+
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"></action>
+            </intent-filter>
+
+
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter">
+
+            </meta-data>
+
         </activity>
 
-        <activity
-            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            tools:replace="screenOrientation"></activity>
+        <!--<activity-->
+            <!--android:name="com.journeyapps.barcodescanner.CaptureActivity"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--tools:replace="screenOrientation"></activity>-->
 
 
     </application>

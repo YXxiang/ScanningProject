@@ -94,4 +94,33 @@ public class ScanTools {
         return stringBuilder.toString();
     }
 
+
+    /**
+     *
+     * @param
+     * @return 判断数据是是NFC扫描得到的结果，还是条码扫描得到的结果
+     */
+    public static int getNfcDataBySelectedIndex(String s){
+        String str = s.substring(0,1);
+        if (str.equals("1")){
+            return 0;
+        }
+        return 1;
+    }
+
+
+    /**
+     * 获取回来的厂证号码
+     * @param s
+     * @return
+     */
+    public static String getIdNumber(String s){
+        if (s.isEmpty()) return "";
+        String[] sList = s.split(";");
+        String[] arr = sList[1].split(",");
+        return  arr[0];
+
+    }
+
+
 }

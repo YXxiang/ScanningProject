@@ -11,15 +11,42 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo"/>
+
     <TextView
         android:id="@+id/op_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageview"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:text="請掃描廠證,識別使用者身份~~"/>
+        android:text="掃描廠證"/>
+
+    <RadioGroup
+        android:id="@+id/login_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/op_textview"
+        android:layout_marginTop="30dp">
+        <RadioButton
+            android:id="@+id/selected_nfc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/custom_red"
+            android:text="NFC掃描"
+            android:textSize="20sp"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/selected_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/custom_red"
+            android:text="條碼掃描"
+            android:textSize="20sp"/>
+
+    </RadioGroup>
 
 
 
