@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static android.nfc.tech.MifareClassic.KEY_DEFAULT;
 
@@ -176,6 +177,7 @@ public class MifareClassicUtils {
                             bIndex = mMfc.sectorToBlock(1);
                             for (int i = 0; i < bCount; i++) {
                                 byte[] data = mMfc.readBlock(bIndex);
+//                                Log.d("输出",""+ Arrays.toString(data));
                                 if (bIndex != 0 && (((bIndex-3)%4 != 0))){
                                     result += Utils.bytesToHexString(data)+ ",";
                                 } else {

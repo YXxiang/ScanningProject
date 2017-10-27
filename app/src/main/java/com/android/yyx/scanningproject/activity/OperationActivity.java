@@ -241,13 +241,16 @@ public class OperationActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String info = (String) msg.obj;
+            Log.d("输出解读ID卡号扇区信息 = ",info);
             String[] datas = info.split(",");
             String ss = datas[0];
+
             if (ss.length() == 0) return;
-            int leading = Utils.hexStringToAlgorism(ss.substring(0,2));
-            int traling = Utils.hexStringToAlgorism(ss.substring(2,6));
+//            int leading = Utils.hexStringToAlgorism(ss.substring(0,2));
+//            int traling = Utils.hexStringToAlgorism(ss.substring(2,6));
+            int leading = Integer.parseInt(ss.substring(0,2),16);
+            int traling = Integer.parseInt(ss.substring(2,6),16);
             ss = String.format("%d%d",leading,traling);
-//            Log.d("输出",ss);
             getNetworkWithData(ss);
         }
     };
