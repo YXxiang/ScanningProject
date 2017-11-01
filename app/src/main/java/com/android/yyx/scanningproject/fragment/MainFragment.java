@@ -19,6 +19,7 @@ import com.android.yyx.scanningproject.activity.OperationActivity;
 import com.android.yyx.scanningproject.base.MyApplication;
 import com.android.yyx.scanningproject.tools.CallBack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,12 +41,15 @@ public class MainFragment extends Fragment {
     public TextView textView3;
     public TextView textView4;
     public EditText textView5;
+    public EditText textView6;
 
     public TextView scanBtn;
     public TextView saveBtn;
     public TextView exitBtn;
     public RadioGroup radioGroup;
     public Boolean isInOrOut = true;
+    public String flag = "";
+    private List<TextView> textViews = new ArrayList<>();
 
 
     @Override
@@ -101,6 +105,15 @@ public class MainFragment extends Fragment {
         textView3 = getActivity().findViewById(R.id.textView3);
         textView4 = getActivity().findViewById(R.id.textView4);
         textView5 =  getActivity().findViewById(R.id.textView5);
+        textView6 =  getActivity().findViewById(R.id.textView6);
+
+//        textViews.add(carNum);
+        textViews.add(drive);
+        textViews.add(textView1);
+        textViews.add(textView2);
+        textViews.add(textView3);
+        textViews.add(textView4);
+
 
         initNullText();
 
@@ -154,46 +167,34 @@ public class MainFragment extends Fragment {
     }
 
 
-    public void initTextView(List<String> list){
-        for (int i = 0; i < list.size(); i++) {
-            switch (i) {
-                case 0:
-                    String[] ss = list.get(0).split(";");
-                    String[] sss = ss[0].split(":");
-                    if (sss.length > 1){
-                        carNum.setText(sss[1]);
-                    }else {
-                        carNum.setText("無車輛信息記錄!");
-                    }
-                    drive.setText(ss[1]);
-                    break;
-                case 1:
-                    String[] ss1 = list.get(1).split(";");
-                    textView1.setText(ss1[1]);
-                    break;
-                case 2:
-                    String[] ss2 = list.get(2).split(";");
-                    textView2.setText(ss2[1]);
-                    break;
-                case 3:
-                    String[] ss3 = list.get(3).split(";");
-                    textView3.setText(ss3[1]);
-                    break;
-                case 4:
-                    String[] ss4 = list.get(4).split(";");
-                    textView4.setText(ss4[1]);
-                    break;
-                case 5:
-//                    textView4.setText(list.get(5));
-                    break;
-                default:
-                    Log.d("输出", "default");
-                    break;
+    public void initTextView(String dataString){
+        String[] datas = dataString.split(";");
+        String s1 = datas[0];   //标志位P：私家家  C：公司车
+        String s2 = datas[1];   //车牌号
+        String s3 = datas[2];   //司机信息
+
+        String[] ss = s2.split(":");
+        String numStr = ss.length > 1 ? ss[1] : "無車輛信息記錄!";
+
+        if (s1.equals("C") && !flag.equals("C") && carNum.getText().toString().isEmpty()){
+            flag = "C";
+            carNum.setText(numStr);
+
+        }else if (s1.equals("P")){
+            if (carNum.getText().toString().isEmpty()){
+                carNum.setText(numStr);
             }
+            for (TextView tt : textViews){
+                if (tt.getText().toString().isEmpty()){
+                    tt.setText(s3);
+                    break;
+                }
+            }
+
         }
 
-    }
 
+    }
 
 
     public void initNullText(){
@@ -204,6 +205,8 @@ public class MainFragment extends Fragment {
         textView3.setText(null);
         textView4.setText(null);
         textView5.setText(null);
+        textView6.setText(null);
+        flag = "";
 
     }
 

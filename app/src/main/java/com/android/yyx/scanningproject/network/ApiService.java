@@ -16,16 +16,16 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("Car_UserChk")
-    Observable<ResponseBody> getUserCheckIfo(@Field("p_rdcheck") int rdcheck,
-                                             @Field("p_appid") String appid,
+    Observable<ResponseBody> getUserCheckIfo(@Field("p_Rdcheck") int rdcheck,
+                                             @Field("p_Appid") String appid,
                                              @Field("p_Barcode") String barcodes,
-                                             @Field("p_sessionid") String sessionId);
+                                             @Field("p_Sessionid") String sessionId);
 
     @FormUrlEncoded
     @POST("GetEmpinfo")
-    Observable<ResponseBody> getEmpinfo(@Field("p_rdcheck") int rdcheck,
+    Observable<ResponseBody> getEmpinfo(@Field("p_Rdcheck") int rdcheck,
                                         @Field("p_Barcode") String barcodes,
-                                        @Field("p_sessionid") String sessionId);
+                                        @Field("p_Sessionid") String sessionId);
 
 
     @FormUrlEncoded
@@ -33,7 +33,8 @@ public interface ApiService {
     Observable<ResponseBody> saveEntryDataInfoCodes(@Field("p_Barcode") String barcodes,
                                                     @Field("p_IO") String ioStr,
                                                     @Field("p_RMK") String text,
-                                                    @Field("p_sessionid") String sessionId,
-                                                    @Field("p_empno") String empno);
+                                                    @Field("p_Mileage") String mileage,
+                                                    @Field("p_Sessionid") String sessionId,
+                                                    @Field("p_Empno") String empno);
 
 }

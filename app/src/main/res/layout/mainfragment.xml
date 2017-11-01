@@ -17,19 +17,19 @@
         android:background="@drawable/nav_black"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:layout_marginLeft="18dp"
             android:textColor="#333333"
             android:textSize="18sp"
-            android:text="司機"/>
+            android:text="車輛信息"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
@@ -53,9 +53,9 @@
         </RadioGroup>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="3dp"
@@ -69,74 +69,8 @@
     </LinearLayout>
 
 
-    <!--司机信息-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/drive_view"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="4"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:text="車 牌 號:"
-                android:textSize="@dimen/textSize"
-                android:gravity="center"
-                />
-
-            <TextView
-                android:id="@+id/carNum"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/textSize"
-                android:textColor="#7A7A7A"
-                android:background="@drawable/bg_gray_border"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="司機信息:"
-                android:textSize="@dimen/textSize"
-                android:gravity="center"
-
-                />
-
-            <TextView
-                android:id="@+id/drive"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/textSize"
-                android:textColor="#7A7A7A"
-                android:background="@drawable/bg_gray_border"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-        </LinearLayout>
 
 
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -146,6 +80,145 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+
+
+            <!--車輛信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/drive_view"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:text="里  程:"
+                        android:textSize="@dimen/textSize"
+                        android:gravity="center"
+                        />
+
+                    <EditText
+                        android:id="@+id/textView6"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/textSize"
+                        android:textColor="#7A7A7A"
+                        android:background="@drawable/bg_gray_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textCursorDrawable="@null"
+                        />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_weight="4"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:text="車 牌 號:"
+                        android:textSize="@dimen/textSize"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/carNum"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/textSize"
+                        android:textColor="#7A7A7A"
+                        android:background="@drawable/bg_gray_border"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+            <!--司機~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~一-->
+            <LinearLayout
+                android:id="@+id/main_heardView0"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/nav_black"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="18dp"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:text="司機"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_weight="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="司機信息:"
+                    android:textSize="@dimen/textSize"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:id="@+id/drive"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/textSize"
+                    android:textColor="#7A7A7A"
+                    android:background="@drawable/bg_gray_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+
+
+
 
             <!--乘客~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~一-->
             <LinearLayout
@@ -169,19 +242,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:id="@+id/scan_btn1"
-                    android:textColor="@color/webviewProgress"
-                    android:gravity="center_vertical|right"
-                    android:layout_marginRight="18dp"
-                    />
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 
@@ -343,6 +407,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView

@@ -1,5 +1,6 @@
 package com.android.yyx.scanningproject.activity;
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -236,6 +237,7 @@ public class OperationActivity extends AppCompatActivity {
     /**
      * 封装的MF1协议类中，数据都在子线程中，因此要回调到UI线程
      */
+    @SuppressLint("HandlerLeak")
     public Handler myHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -244,7 +246,6 @@ public class OperationActivity extends AppCompatActivity {
             Log.d("输出解读ID卡号扇区信息 = ",info);
             String[] datas = info.split(",");
             String ss = datas[0];
-
             if (ss.length() == 0) return;
 //            int leading = Utils.hexStringToAlgorism(ss.substring(0,2));
 //            int traling = Utils.hexStringToAlgorism(ss.substring(2,6));
@@ -396,13 +397,12 @@ public class OperationActivity extends AppCompatActivity {
                             String s = ScanTools.getContentFromTag(reslut);
                             Log.d("输出","responseBody = "+s);
                             if (ScanTools.returnTureOrFalse(s)){
-                                if (!codeList.contains(barCodes) && codeList.size() < 5){
+                                if (!codeList.contains(barCodes) && codeList.size() < 6){
                                     codeList.add(barCodes);
                                 }
-                                if (dataList.size() > 4) return;
-                                if (dataList.contains(s)) return;
+                                if (dataList.size() > 5 || dataList.contains(s)) return;
                                 dataList.add(dataList.size(),s);
-                                mainFragment.initTextView(dataList);
+                                mainFragment.initTextView(s);
 
                             }else {
                                 Toast.makeText(OperationActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -432,6 +432,7 @@ public class OperationActivity extends AppCompatActivity {
         String p_Barcodes = barCodes;
         String p_IO = (isInOrOut ? "I" : "O");
         String p_MRK = mainFragment.textView5.getText().toString();
+        String p_Mileage = mainFragment.textView6.getText().toString();
         String p_sessionid = ScanTools.getNowTime();
         String userNum = mainFragment.userNumber.getText().toString();
         String[] list = userNum.split(":");
@@ -439,11 +440,18 @@ public class OperationActivity extends AppCompatActivity {
         Log.d("输出", "p_Barcodes = " + p_Barcodes + "," +
                 "p_IO = " + p_IO + "," +
                 "p_MRK = " + p_MRK + "," +
+                "p_Mileage = " + p_Mileage + "," +
                 "p_sessionid = " + p_sessionid + "," +
                 "p_empno = " + p_empno);
+
+        if (mainFragment.textView6.getText().toString().isEmpty() && mainFragment.flag.equals("C")){
+            Toast.makeText(OperationActivity.this, "注意咯:請輸入里程數!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ServiceManager.getInstances()
                 .configerApi()
-                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK, p_sessionid,p_empno)
+                .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK,p_Mileage, p_sessionid,p_empno)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
