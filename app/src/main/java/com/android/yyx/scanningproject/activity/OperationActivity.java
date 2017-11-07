@@ -29,6 +29,7 @@ import com.android.yyx.scanningproject.tools.CallBack;
 import com.android.yyx.scanningproject.tools.DeviceUuidFactory;
 import com.android.yyx.scanningproject.tools.LoginCallBack;
 import com.android.yyx.scanningproject.tools.ScanTools;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,6 +59,13 @@ public class OperationActivity extends AppCompatActivity {
     private boolean selectedNFC = true;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
+
+    private final KProgressHUD kProgressHUD = KProgressHUD.create(OperationActivity.this)
+            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+            .setLabel("數據保存中,請等待...")
+            .setCancellable(true)
+            .setAnimationSpeed(2)
+            .setDimAmount(0.5f);
 
 
 
@@ -330,6 +338,9 @@ public class OperationActivity extends AppCompatActivity {
 
         String sessionid = ScanTools.getNowTime();
         Log.d("输出","选择(0:NFC,1:条码) = " + p_rdcheck + ", 设备ID = " + deviceID + ", NFC/条码 = " + barCodes + ", 时间 = " + sessionid);
+
+        kProgressHUD.show();
+
         ServiceManager.getInstances()
                 .configerApi()
                 .getUserCheckIfo(p_rdcheck,deviceID,barCodes,sessionid)
@@ -342,6 +353,8 @@ public class OperationActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onNext(@NonNull ResponseBody responseBody) {
+                        kProgressHUD.dismiss();
+
                         try {
                             String reslut = responseBody.string();
                             String s = ScanTools.getContentFromTag(reslut);
@@ -397,12 +410,6 @@ public class OperationActivity extends AppCompatActivity {
                             String s = ScanTools.getContentFromTag(reslut);
                             Log.d("输出","responseBody = "+s);
                             if (ScanTools.returnTureOrFalse(s)){
-//                                if (!codeList.contains(barCodes) && codeList.size() < 6){
-//                                    codeList.add(barCodes);
-//                                }
-//                                if (dataList.size() > 5 || dataList.contains(s)) return;
-//                                dataList.add(dataList.size(),s);
-//                                mainFragment.initTextView(s);
                                 if (dataList.size() <= 6 && !dataList.contains(s)){
                                     dataList.add(s);
                                     if (!codeList.contains(barCodes) && codeList.size() <= 6){
@@ -457,6 +464,8 @@ public class OperationActivity extends AppCompatActivity {
             return;
         }
 
+        kProgressHUD.show();
+
         ServiceManager.getInstances()
                 .configerApi()
                 .saveEntryDataInfoCodes(p_Barcodes, p_IO, p_MRK,p_Mileage, p_sessionid,p_empno)
@@ -484,6 +493,7 @@ public class OperationActivity extends AppCompatActivity {
                             }else {
                                 toastText = "保存失敗!";
                             }
+                            kProgressHUD.dismiss();
                             Toast.makeText(OperationActivity.this, toastText, Toast.LENGTH_SHORT).show();
 
                         }catch (IOException e){
