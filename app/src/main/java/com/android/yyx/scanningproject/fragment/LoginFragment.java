@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.yyx.scanningproject.R;
 import com.android.yyx.scanningproject.tools.CallBack;
 import com.android.yyx.scanningproject.tools.LoginCallBack;
+import com.android.yyx.scanningproject.tools.SysUtil;
 
 /**
  * Created by yeyuanxiang on 2017/10/18.
@@ -27,6 +28,7 @@ import com.android.yyx.scanningproject.tools.LoginCallBack;
 public class LoginFragment extends Fragment {
 
     private TextView textView;
+    private  TextView versionname;
     private RadioGroup loginRadioGroup;
     public LoginCallBack loginCallBack;
     private int index;
@@ -57,6 +59,8 @@ public class LoginFragment extends Fragment {
 
     private void initView(){
         textView = getActivity().findViewById(R.id.op_textview);
+        versionname = getActivity().findViewById(R.id.versionname);
+        versionname.setText("版本:"+SysUtil.getVersionName(getActivity()));
         loginRadioGroup = getActivity().findViewById(R.id.login_radioGroup);
         loginRadioGroup.setVisibility(View.INVISIBLE);
         loginRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

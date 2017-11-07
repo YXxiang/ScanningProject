@@ -397,12 +397,20 @@ public class OperationActivity extends AppCompatActivity {
                             String s = ScanTools.getContentFromTag(reslut);
                             Log.d("输出","responseBody = "+s);
                             if (ScanTools.returnTureOrFalse(s)){
-                                if (!codeList.contains(barCodes) && codeList.size() < 6){
-                                    codeList.add(barCodes);
+//                                if (!codeList.contains(barCodes) && codeList.size() < 6){
+//                                    codeList.add(barCodes);
+//                                }
+//                                if (dataList.size() > 5 || dataList.contains(s)) return;
+//                                dataList.add(dataList.size(),s);
+//                                mainFragment.initTextView(s);
+                                if (dataList.size() <= 6 && !dataList.contains(s)){
+                                    dataList.add(s);
+                                    if (!codeList.contains(barCodes) && codeList.size() <= 6){
+                                        codeList.add(barCodes);
+                                    }
+                                    mainFragment.initTextView(s);
                                 }
-                                if (dataList.size() > 5 || dataList.contains(s)) return;
-                                dataList.add(dataList.size(),s);
-                                mainFragment.initTextView(s);
+
 
                             }else {
                                 Toast.makeText(OperationActivity.this, s, Toast.LENGTH_SHORT).show();
