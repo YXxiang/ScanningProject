@@ -65,20 +65,15 @@ public class BaseActivity extends RxAppCompatActivity {
         FrameLayout.LayoutParams lp= (FrameLayout.LayoutParams) view.getLayoutParams();
         lp.setMargins(0,(int)this.getResources().getDimension(R.dimen.toolbar_height),0,0);
     }
-
-
     public void setToolBarTitle(String toolBarTitle) {
         this.toolBarTitle.setText(toolBarTitle);
     }
-
     public void setUsername(String username) {
-        this.username.setText(username);;
+        this.username.setText(username);
     }
-
     public void setNumber(String number) {
         this.number.setText(number);
     }
-
     public void goneToolBar(){
         mToolbar.setVisibility(View.GONE);
     }

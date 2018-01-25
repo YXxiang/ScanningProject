@@ -11,7 +11,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/logo"/>
-
     <TextView
         android:id="@+id/op_textview"
         android:layout_width="wrap_content"
@@ -21,7 +20,6 @@
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:text="掃描廠證"/>
-
     <RadioGroup
         android:id="@+id/login_radioGroup"
         android:layout_width="wrap_content"
@@ -47,7 +45,6 @@
             android:textSize="20sp"/>
 
     </RadioGroup>
-
     <TextView
         android:id="@+id/versionname"
         android:layout_width="wrap_content"
@@ -56,7 +53,5 @@
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"/>
-
-
 
 </RelativeLayout>

@@ -60,12 +60,7 @@ public class OperationActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
 
-    private final KProgressHUD kProgressHUD = KProgressHUD.create(OperationActivity.this)
-            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-            .setLabel("數據保存中,請等待...")
-            .setCancellable(true)
-            .setAnimationSpeed(2)
-            .setDimAmount(0.5f);
+    private KProgressHUD kProgressHUD;
 
 
 
@@ -73,6 +68,13 @@ public class OperationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operation);
+
+        kProgressHUD = KProgressHUD.create(OperationActivity.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("網絡加載中,請等待...")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f);
 
         init();
 
@@ -257,9 +259,12 @@ public class OperationActivity extends AppCompatActivity {
             if (ss.length() == 0) return;
 //            int leading = Utils.hexStringToAlgorism(ss.substring(0,2));
 //            int traling = Utils.hexStringToAlgorism(ss.substring(2,6));
+
             int leading = Integer.parseInt(ss.substring(0,2),16);
             int traling = Integer.parseInt(ss.substring(2,6),16);
-            ss = String.format("%d%d",leading,traling);
+            String s1 = String.format("%d",leading);
+            String s2 = String.format("%05d",traling);
+            ss = s1 + s2;
             getNetworkWithData(ss);
         }
     };
@@ -393,6 +398,7 @@ public class OperationActivity extends AppCompatActivity {
 
         String sessionid = ScanTools.getNowTime();
         Log.d("输出","选择(0:NFC,1:条码) = " + p_rdcheck + ", NFC/条码 = " + barCodes + "，时间 = " + sessionid);
+        kProgressHUD.show();
         ServiceManager.getInstances()
                 .configerApi()
                 .getEmpinfo(p_rdcheck,barCodes,sessionid)
@@ -405,10 +411,10 @@ public class OperationActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onNext(@NonNull ResponseBody responseBody) {
+                        kProgressHUD.dismiss();
                         try {
                             String reslut = responseBody.string();
                             String s = ScanTools.getContentFromTag(reslut);
-                            Log.d("输出","responseBody = "+s);
                             if (ScanTools.returnTureOrFalse(s)){
                                 if (dataList.size() <= 6 && !dataList.contains(s)){
                                     dataList.add(s);
@@ -479,6 +485,7 @@ public class OperationActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(@NonNull ResponseBody responseBody) {
+                        kProgressHUD.dismiss();
                         try {
                             String results = responseBody.string();
                             String s = ScanTools.getContentFromTag(results);
@@ -493,7 +500,6 @@ public class OperationActivity extends AppCompatActivity {
                             }else {
                                 toastText = "保存失敗!";
                             }
-                            kProgressHUD.dismiss();
                             Toast.makeText(OperationActivity.this, toastText, Toast.LENGTH_SHORT).show();
 
                         }catch (IOException e){

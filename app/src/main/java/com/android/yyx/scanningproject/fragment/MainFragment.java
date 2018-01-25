@@ -168,6 +168,7 @@ public class MainFragment extends Fragment {
 
 
     public void initTextView(String dataString){
+        Log.d("输出","responseBody = "+dataString);
         String[] datas = dataString.split(";");
         String s1 = datas[0];   //标志位P：私家家  C：公司车
         String s2 = datas[1];   //车牌号
