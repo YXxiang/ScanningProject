@@ -378,11 +378,11 @@ public class OperationActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Toast.makeText(OperationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onComplete() {
-
+                        kProgressHUD.dismiss();
                     }
                 });
 
@@ -435,11 +435,11 @@ public class OperationActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Toast.makeText(OperationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onComplete() {
-
+                        kProgressHUD.dismiss();
                     }
                 });
     }
@@ -510,12 +510,11 @@ public class OperationActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-
+                        Toast.makeText(OperationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onComplete() {
-
+                        kProgressHUD.dismiss();
                     }
                 });
 

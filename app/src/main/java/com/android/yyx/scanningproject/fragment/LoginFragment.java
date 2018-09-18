@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
         versionname = getActivity().findViewById(R.id.versionname);
         versionname.setText("版本:"+SysUtil.getVersionName(getActivity()));
         loginRadioGroup = getActivity().findViewById(R.id.login_radioGroup);
-        loginRadioGroup.setVisibility(View.INVISIBLE);
+        loginRadioGroup.setVisibility(View.INVISIBLE); //设置透明，屏蔽开关
         loginRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {

@@ -191,10 +191,7 @@ public class MainFragment extends Fragment {
                     break;
                 }
             }
-
         }
-
-
     }
 
 
